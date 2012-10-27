@@ -1,6 +1,38 @@
 # MethodCrm
 
-TODO: Write a gem description
+A complete list of service methods can be found here: [https://www.methodintegration.com/MethodAPI/service.asmx](https://www.methodintegration.com/MethodAPI/service.asmx). For this gem the V2 version of methods is assumed.
+
+## Usage
+
+    client = MethodClient.new('Company', 'username', 'P@SSw0rd')
+
+    client.table_list
+     => ["Account", "AccountAccountType", ... "VendorCreditLineItem", "VendorType"]
+
+    client.table_list(:detailed)
+     => [
+          [  0] {
+                 "TableName" => "Account",
+               "SupportsAdd" => "true",
+              "SupportsEdit" => "true"
+          },
+          [  1] {
+                 "TableName" => "AccountAccountType",
+               "SupportsAdd" => "false",
+              "SupportsEdit" => "false"
+          },
+          ...
+          [155] {
+                 "TableName" => "VendorCreditLineItem",
+               "SupportsAdd" => "true",
+              "SupportsEdit" => "true"
+          },
+          [156] {
+                 "TableName" => "VendorType",
+               "SupportsAdd" => "true",
+              "SupportsEdit" => "false"
+          }
+        ]
 
 ## Installation
 
@@ -15,10 +47,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install method_crm
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 
