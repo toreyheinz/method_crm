@@ -2,16 +2,16 @@
 require File.expand_path('../lib/method_crm/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Torey Heinz"]
-  gem.email         = ["toreyheinz@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.name          = "method_crm"
+  gem.version       = '0.0.1'
+  
+  gem.author        = 'Torey Heinz'
+  gem.email         = 'toreyheinz@gmail.com'
+  gem.description   = %q{A ruby wrapper for the MethodCRM API}
+  gem.summary       = gem.description
+  gem.homepage      = 'https://github.com/toreyheinz/method_crm'
 
   gem.files         = `git ls-files`.split($\)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "method_crm"
-  gem.require_paths = ["lib"]
-  gem.version       = MethodCrm::VERSION
+  # gem.test_files    = gem.files.grep(/^spec/)
+  gem.require_path  = 'lib'
 end
