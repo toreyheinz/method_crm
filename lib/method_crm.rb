@@ -9,13 +9,16 @@ module MethodCrm
     end
 
     def table_list
-    result = RestClient.post('http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPITableListV2', @auth)
-    content = MultiXml.parse(result)['string']['__content__']
-    MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
+      parsed_response('TableList')
     end
 
     def field_list(table)
-      result = RestClient.post('http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPIFieldListV2', @auth.merge('strTable' => table))
+      parsed_response('FieldList', {'strTable' => table})
+    end
+
+  private
+    def parsed_response(opperation, data={})
+      result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
       content = MultiXml.parse(result)['string']['__content__']
       MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
     end
