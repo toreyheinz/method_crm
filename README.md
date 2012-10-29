@@ -1,5 +1,7 @@
 # MethodCrm
 
+A ruby wrapper for the MethodCRM API
+
 A complete list of service methods can be found here: [https://www.methodintegration.com/MethodAPI/service.asmx](https://www.methodintegration.com/MethodAPI/service.asmx). For this gem the V2 version of methods is assumed.
 
 ## Usage
