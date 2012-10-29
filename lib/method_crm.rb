@@ -2,7 +2,6 @@ require 'rest_client'
 require 'multi_xml'
 module MethodCrm
   class Client
-    include RestClient
 
     def initialize(company, username, password)
       @auth = {strCompanyAccount: company, strLogin: username, strPassword:  password, strSessionID: nil}
