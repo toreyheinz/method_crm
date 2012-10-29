@@ -1,6 +1,4 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/method_crm/version', __FILE__)
-
 Gem::Specification.new do |gem|
   gem.name          = "method_crm"
   gem.version       = '0.0.1'
@@ -12,6 +10,9 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/toreyheinz/method_crm'
 
   gem.files         = `git ls-files`.split($\)
-  # gem.test_files    = gem.files.grep(/^spec/)
   gem.require_path  = 'lib'
+
+  gem.add_development_dependency 'rake', '~> 0.9'
+  gem.add_development_dependency 'rspec', '~> 2.11'
+  gem.test_files    = gem.files.grep(/^spec/)
 end
