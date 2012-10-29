@@ -14,4 +14,8 @@ describe MethodCrm::Client do
   it '#field_list returns an array of field hashes' do
     client.field_list('Invoice').all? {|hash| hash.has_key?('FieldName')}.should be
   end
+
+  it '#get_records returns a table`s records' do
+    puts client.get_records('Account').all? {|hash| hash.has_key?('AccountNumber')}.should be
+  end
 end
