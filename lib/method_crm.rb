@@ -13,5 +13,11 @@ module MethodCrm
     content = MultiXml.parse(result)['string']['__content__']
     MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
     end
+
+    def field_list(table)
+      result = RestClient.post('http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPIFieldListV2', @auth.merge('strTable' => table))
+      content = MultiXml.parse(result)['string']['__content__']
+      MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
+    end
   end
 end
