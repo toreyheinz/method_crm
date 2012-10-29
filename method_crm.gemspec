@@ -12,6 +12,9 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files`.split($\)
   gem.require_path  = 'lib'
 
+  gem.add_dependency 'rest-client', '~> 1.6'
+  gem.add_dependency 'multi_xml'
+
   gem.add_development_dependency 'rake', '~> 0.9'
   gem.add_development_dependency 'rspec', '~> 2.11'
   gem.test_files    = gem.files.grep(/^spec/)
