@@ -26,7 +26,8 @@ module MethodCrm
   private
     def parsed_response(opperation, data={})
       result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
-      content = MultiXml.parse(result)['string']['__content__']
+      xml    = MultiXml.parse(result)
+      content = xml['string']['__content__'] || xml['string']
       MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
     end
   end
