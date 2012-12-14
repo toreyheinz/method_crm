@@ -1,5 +1,7 @@
 require 'rest_client'
 require 'multi_xml'
+
+class MethodCrmClientError < StandardError; end
 module MethodCrm
   class Client
 
@@ -35,7 +37,9 @@ module MethodCrm
     end
 
     def get_record(table, options={})
-      get_records(table, options)
+      record = get_records(table, options)
+      raise MethodCrmClientError, 'Query returned more than one record' unless record.is_a?(Hash)
+      record
     end
   private
     def parsed_response(opperation, data={})

@@ -98,5 +98,13 @@ describe MethodCrm::Client do
       result = client.get_record('AccountAccountType', {:where => "AccountTypeName like 'CostOfGoodsSold'"})
       result['AccountTypeName'].should eq('CostOfGoodsSold')
     end
+
+    it "raises an error if more than one record is found" do
+      expect {
+        client.get_record('AccountAccountType', 
+          {:where => "AccountTypeName like 'Other%'"}
+          )
+        }.to raise_error(MethodCrmClientError, 'Query returned more than one record')
+    end
   end
 end
