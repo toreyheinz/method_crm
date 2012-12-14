@@ -29,6 +29,7 @@ describe MethodCrm::Client do
   end
 
   it '#get_records returns a table`s records' do
-    client.get_records('Account').all? {|hash| hash.has_key?('AccountNumber')}.should be
+    results = client.get_records('AccountAccountType')
+    results.all? {|hash| hash.has_key?('AccountTypeName')}.should be
   end
 end
