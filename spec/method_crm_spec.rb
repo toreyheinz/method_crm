@@ -32,10 +32,22 @@ describe MethodCrm::Client do
   end
 
   describe '#field_list' do
+    it 'returns a given table`s field names' do
+      results = client.field_list('AccountAccountType')
+      results.should include("AccountTypeName", "RecordID")
+    end
+
     context ":detailed" do
-      it 'returns a given table`s fields' do
-        results = client.field_list('AccountAccountType')
-        results.all? {|hash| hash.has_key?('FieldName')}.should be
+      it 'returns a given table`s field details' do
+        results = client.field_list('AccountAccountType', :detailed)
+        results.first.keys.should include(
+          "SupportsAdd",
+          "SupportsEdit",
+          "IsRequired",
+          "FieldName",
+          "MaxSize",
+          "DataType"
+          )
       end
     end
   end

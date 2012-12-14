@@ -17,13 +17,19 @@ module MethodCrm
       end
     end
 
-    def field_list(table)
-      parsed_response('FieldList', {'strTable' => table})
+    def field_list(table, output = nil) 
+      results = parsed_response('FieldList', {'strTable' => table})
+      case output.to_s
+      when 'detailed'
+        results
+      else
+        results.map { |table| table['FieldName'] }
+      end
     end
 
     def get_records(table, fields = :all_fields)
       if fields == :all_fields
-        fields = field_list(table).map { |field| field['FieldName'] }.join(',')
+        fields = field_list(table).join(',')
       end
       data = @auth.merge({strTable: table, strFields: fields, strWhereClause: nil, strGroupByClause: nil, strHaving: nil, strOrderBy: nil})
       parsed_response('Select_XML', data)
