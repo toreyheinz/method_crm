@@ -91,6 +91,11 @@ describe MethodCrm::Client do
           "Suspense"
         )
     end
+
+    it 'returns an empty Array when no records are found' do
+      results = client.get_records('AccountAccountType', {:where => "AccountTypeName like 'SomeNonExistingName!'"})
+      results.should eq([])
+    end
   end
 
   describe '#get_record' do

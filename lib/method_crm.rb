@@ -46,7 +46,16 @@ module MethodCrm
       result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
       xml    = MultiXml.parse(result)
       content = xml['string']['__content__'] || xml['string']
-      MultiXml.parse(content)['MethodAPI']['MethodIntegration']['Record']
+      parsed_content = MultiXml.parse(content)
+      if parsed_content['MethodAPI']['response'] == "Success"
+        unless parsed_content['MethodAPI']['MethodIntegration'].nil?
+          parsed_content['MethodAPI']['MethodIntegration']['Record']
+        else
+          []
+        end
+      else
+        raise MethodCrmClientError, "#{opperation} was not successfull."
+      end
     end
   end
 end
