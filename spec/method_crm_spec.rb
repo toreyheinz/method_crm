@@ -1,20 +1,27 @@
 require 'spec_helper'
 
 describe MethodCrm::Client do
-  let(:client) {MethodCrm::Client.new(CONFIG[:company], CONFIG[:user], CONFIG[:password])}
+  let(:client) {MethodCrm::Client.new(
+    CONFIG[:company],
+    CONFIG[:user],
+    CONFIG[:password]
+    )}
   use_vcr_cassette
 
   describe '#table_list' do
-    context "with no args" do
-      it 'returns an array of table names' do
-        results = client.table_list
-        results.should be_an Array
-        results.should include("Account", "AccountAccountType", "VendorCreditLineItem", "VendorType")
-      end
+    it 'returns a list of table names' do
+      results = client.table_list
+      results.should be_an Array
+      results.should include(
+        "Account",
+        "AccountAccountType",
+        "VendorCreditLineItem",
+        "VendorType"
+        )
     end
 
-    context "(:detailed)" do
-      it 'returns an array of table hashes' do
+    context ":detailed" do
+      it 'returns a list of table details' do
         results = client.table_list(:detailed)
         results.should be_an Array
         results.all? {|el| el.has_key?('TableName')}.should be
@@ -24,12 +31,19 @@ describe MethodCrm::Client do
     end
   end
 
-  it '#field_list returns an array of field hashes' do
-    client.field_list('Invoice').all? {|hash| hash.has_key?('FieldName')}.should be
+  describe '#field_list' do
+    context ":detailed" do
+      it 'returns a given table`s fields' do
+        results = client.field_list('AccountAccountType')
+        results.all? {|hash| hash.has_key?('FieldName')}.should be
+      end
+    end
   end
 
-  it '#get_records returns a table`s records' do
-    results = client.get_records('AccountAccountType')
-    results.all? {|hash| hash.has_key?('AccountTypeName')}.should be
+  describe '#get_records' do
+    it 'returns a given table`s records' do
+      results = client.get_records('AccountAccountType')
+      results.all? {|hash| hash.has_key?('AccountTypeName')}.should be
+    end
   end
 end
