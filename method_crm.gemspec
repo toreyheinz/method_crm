@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |gem|
   gem.name          = "method_crm"
-  gem.version       = '0.0.1'
+  gem.version       = '0.1.0'
   
   gem.author        = 'Torey Heinz'
   gem.email         = 'toreyheinz@gmail.com'
