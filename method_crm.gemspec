@@ -16,6 +16,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'multi_xml'
 
   gem.add_development_dependency 'rake', '~> 0.9'
-  gem.add_development_dependency 'rspec', '~> 2.11'
+  gem.add_development_dependency 'rspec', '~> 2.12'
   gem.test_files    = gem.files.grep(/^spec/)
 end
