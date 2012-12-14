@@ -7,8 +7,14 @@ module MethodCrm
       @auth = {strCompanyAccount: company, strLogin: username, strPassword:  password, strSessionID: nil}
     end
 
-    def table_list
-      parsed_response('TableList')
+    def table_list(output = nil)
+      results = parsed_response('TableList')
+      case output.to_s
+      when 'detailed'
+        results
+      else
+        results.map { |table| table['TableName'] }
+      end
     end
 
     def field_list(table)

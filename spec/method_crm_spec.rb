@@ -3,8 +3,24 @@ require 'spec_helper'
 describe MethodCrm::Client do
   let(:client) {MethodCrm::Client.new(CONFIG[:company], CONFIG[:user], CONFIG[:password])}
 
-  it '#table_list returns an array of table hashes' do
-    client.table_list.all? {|hash| hash.has_key?('TableName')}.should be
+  describe '#table_list' do
+    context "with no args" do
+      it 'returns an array of table names' do
+        results = client.table_list
+        results.should be_an Array
+        results.should include("Account", "AccountAccountType", "VendorCreditLineItem", "VendorType")
+      end
+    end
+
+    context "(:detailed)" do
+      it 'returns an array of table hashes' do
+        results = client.table_list(:detailed)
+        results.should be_an Array
+        results.all? {|el| el.has_key?('TableName')}.should be
+        results.all? {|el| el.has_key?('SupportsAdd')}.should be
+        results.all? {|el| el.has_key?('SupportsEdit')}.should be
+      end
+    end
   end
 
   it '#field_list returns an array of field hashes' do
