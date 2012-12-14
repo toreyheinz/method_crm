@@ -27,14 +27,16 @@ module MethodCrm
       end
     end
 
-    def get_records(table, fields = :all_fields)
-      if fields == :all_fields
-        fields = field_list(table).join(',')
-      end
-      data = @auth.merge({strTable: table, strFields: fields, strWhereClause: nil, strGroupByClause: nil, strHaving: nil, strOrderBy: nil})
+    def get_records(table, options={})
+      options[:fields] ||= field_list(table).join(',')
+      options = {:where => nil}.merge(options)
+      data = @auth.merge({strTable: table, strFields: options[:fields], strWhereClause: options[:where], strGroupByClause: nil, strHaving: nil, strOrderBy: nil})
       parsed_response('Select_XML', data)
     end
 
+    def get_record(table, options={})
+      get_records(table, options)
+    end
   private
     def parsed_response(opperation, data={})
       result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))

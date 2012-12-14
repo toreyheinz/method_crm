@@ -75,5 +75,28 @@ describe MethodCrm::Client do
           "Suspense"
         )
     end
+
+    it 'limits records with a where clause' do
+      results = client.get_records('AccountAccountType', {:where => "AccountTypeName like 'Other%'"})
+      account_type_names = results.map {|record| record['AccountTypeName'] }
+      account_type_names.should include(
+          "OtherAsset", 
+          "OtherCurrentAsset", 
+          "OtherCurrentLiability", 
+          "OtherExpense", 
+          "OtherIncome", 
+        )
+      account_type_names.should_not include(
+          "AccountsPayable",
+          "Suspense"
+        )
+    end
+  end
+
+  describe '#get_record' do
+    it "returns a single record" do
+      result = client.get_record('AccountAccountType', {:where => "AccountTypeName like 'CostOfGoodsSold'"})
+      result['AccountTypeName'].should eq('CostOfGoodsSold')
+    end
   end
 end
