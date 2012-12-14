@@ -16,3 +16,4 @@ test/tmp
 test/version_tmp
 tmp
 spec/support/config.yml
+spec/support/cassettes/MethodCrm_Client.yml

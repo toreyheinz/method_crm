@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe MethodCrm::Client do
   let(:client) {MethodCrm::Client.new(CONFIG[:company], CONFIG[:user], CONFIG[:password])}
+  use_vcr_cassette
 
   describe '#table_list' do
     context "with no args" do

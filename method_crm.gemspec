@@ -15,7 +15,9 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rest-client', '~> 1.6'
   gem.add_dependency 'multi_xml'
 
-  gem.add_development_dependency 'rake', '~> 0.9'
-  gem.add_development_dependency 'rspec', '~> 2.12'
+  gem.add_development_dependency 'rake',    '~> 0.9'
+  gem.add_development_dependency 'rspec',   '~> 2.12'
+  gem.add_development_dependency 'vcr',     '~> 1.6.0'
+  gem.add_development_dependency 'webmock', '~> 1.6.0'
   gem.test_files    = gem.files.grep(/^spec/)
 end
