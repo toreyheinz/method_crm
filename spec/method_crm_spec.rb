@@ -11,7 +11,6 @@ describe MethodCrm::Client do
   describe '#table_list' do
     it 'returns a list of table names' do
       results = client.table_list
-      results.should be_an Array
       results.should include(
         "Account",
         "AccountAccountType",
@@ -23,10 +22,11 @@ describe MethodCrm::Client do
     context ":detailed" do
       it 'returns a list of table details' do
         results = client.table_list(:detailed)
-        results.should be_an Array
-        results.all? {|el| el.has_key?('TableName')}.should be
-        results.all? {|el| el.has_key?('SupportsAdd')}.should be
-        results.all? {|el| el.has_key?('SupportsEdit')}.should be
+        results.first.keys.should include(
+            'TableName',
+            'SupportsAdd',
+            'SupportsEdit'
+          )
       end
     end
   end
@@ -55,7 +55,25 @@ describe MethodCrm::Client do
   describe '#get_records' do
     it 'returns a given table`s records' do
       results = client.get_records('AccountAccountType')
-      results.all? {|hash| hash.has_key?('AccountTypeName')}.should be
+      results.map {|record| record['AccountTypeName'] }.should include(
+          "AccountsPayable",
+          "AccountsReceivable",
+          "Bank",
+          "CostOfGoodsSold",
+          "CreditCard",
+          "Equity",
+          "Expense",
+          "FixedAsset",
+          "Income",
+          "LongTermLiability", 
+          "NonPosting", 
+          "OtherAsset", 
+          "OtherCurrentAsset", 
+          "OtherCurrentLiability", 
+          "OtherExpense", 
+          "OtherIncome", 
+          "Suspense"
+        )
     end
   end
 end
