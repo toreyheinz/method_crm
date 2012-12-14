@@ -54,7 +54,7 @@ module MethodCrm
           []
         end
       else
-        raise MethodCrmClientError, "#{opperation} was not successfull."
+        raise MethodCrmClientError, parsed_content['MethodAPI']['response']
       end
     end
   end
