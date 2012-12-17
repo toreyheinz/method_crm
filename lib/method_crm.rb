@@ -12,7 +12,7 @@ module MethodCrm
     end
 
     def table_list(options={})
-      results = parsed_response('TableList')
+      results = perform_opperation('TableList')
       case options[:output].to_s
       when 'detailed'
         results
@@ -22,7 +22,7 @@ module MethodCrm
     end
 
     def field_list(table, options={}) 
-      results = parsed_response('FieldList', {'strTable' => table})
+      results = perform_opperation('FieldList', {'strTable' => table})
       case options[:output].to_s
       when 'detailed'
         results
@@ -34,7 +34,7 @@ module MethodCrm
     def get_records(table, options={})
       options[:fields] ||= field_list(table).join(',')
       data = @auth.merge({strTable: table, strFields: options[:fields], strWhereClause: options[:where], strGroupByClause: nil, strHaving: nil, strOrderBy: nil})
-      parsed_response('Select_XML', data)
+      perform_opperation('Select_XML', data)
     end
 
     def get_record(table, options={})
@@ -44,7 +44,7 @@ module MethodCrm
     end
 
   private
-    def parsed_response(opperation, data={})
+    def perform_opperation(opperation, data={})
       result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
       xml    = MultiXml.parse(result)
       content = xml['string']['__content__'] || xml['string']
@@ -59,5 +59,7 @@ module MethodCrm
         raise MethodCrmClientError, parsed_content[:method_api][:response]
       end
     end
+
+
   end
 end
