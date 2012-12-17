@@ -23,9 +23,9 @@ describe MethodCrm::Client do
       it 'returns a list of table details' do
         results = client.table_list(:detailed)
         results.first.keys.should include(
-            'TableName',
-            'SupportsAdd',
-            'SupportsEdit'
+            :table_name,
+            :supports_add,
+            :supports_edit
           )
       end
     end
@@ -41,12 +41,12 @@ describe MethodCrm::Client do
       it 'returns a given table`s field details' do
         results = client.field_list('AccountAccountType', :detailed)
         results.first.keys.should include(
-          "SupportsAdd",
-          "SupportsEdit",
-          "IsRequired",
-          "FieldName",
-          "MaxSize",
-          "DataType"
+          :supports_add,
+          :supports_edit,
+          :is_required,
+          :field_name,
+          :max_size,
+          :data_type
           )
       end
     end
@@ -55,7 +55,7 @@ describe MethodCrm::Client do
   describe '#get_records' do
     it 'returns a given table`s records' do
       results = client.get_records('AccountAccountType')
-      results.map {|record| record['AccountTypeName'] }.should include(
+      results.map {|record| record[:account_type_name] }.should include(
           "AccountsPayable",
           "AccountsReceivable",
           "Bank",
@@ -78,7 +78,7 @@ describe MethodCrm::Client do
 
     it 'limits records with a where clause' do
       results = client.get_records('AccountAccountType', {:where => "AccountTypeName like 'Other%'"})
-      account_type_names = results.map {|record| record['AccountTypeName'] }
+      account_type_names = results.map {|record| record[:account_type_name] }
       account_type_names.should include(
           "OtherAsset", 
           "OtherCurrentAsset", 
@@ -101,7 +101,7 @@ describe MethodCrm::Client do
   describe '#get_record' do
     it "returns a single record" do
       result = client.get_record('AccountAccountType', {:where => "AccountTypeName like 'CostOfGoodsSold'"})
-      result['AccountTypeName'].should eq('CostOfGoodsSold')
+      result[:account_type_name].should eq('CostOfGoodsSold')
     end
 
     it "raises an error if more than one record is found" do
