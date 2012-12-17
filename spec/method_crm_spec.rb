@@ -96,6 +96,12 @@ describe MethodCrm::Client do
       results = client.get_records('AccountAccountType', {:where => "AccountTypeName like 'SomeNonExistingName!'"})
       results.should eq([])
     end
+
+    it 'returns an Array when one record is found' do
+      results = client.get_records('AccountAccountType', {:where => "AccountTypeName like 'CostOfGoodsSold'"})
+      results.should be_an Array
+      results.length.should eq(1)
+    end
   end
 
   describe '#get_record' do

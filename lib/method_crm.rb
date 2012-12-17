@@ -39,9 +39,9 @@ module MethodCrm
     end
 
     def get_record(table, options={})
-      record = get_records(table, options)
-      raise MethodCrmClientError, 'Query returned more than one record' unless record.is_a?(Hash)
-      record
+      records = get_records(table, options)
+      raise MethodCrmClientError, 'Query returned more than one record' if records.length > 1
+      records.first
     end
 
   private
@@ -52,7 +52,7 @@ module MethodCrm
       parsed_content = MultiXml.parse(content).rubyize_keys
       if parsed_content[:method_api][:response] == "Success"
         unless parsed_content[:method_api][:method_integration].nil?
-          parsed_content[:method_api][:method_integration][:record]
+          [parsed_content[:method_api][:method_integration][:record]].flatten
         else
           []
         end
