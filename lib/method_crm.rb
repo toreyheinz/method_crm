@@ -47,11 +47,7 @@ module MethodCrm
     def perform_opperation(opperation, data={})
       results = extract_results RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
       if results[:response] == "Success"
-        unless results[:method_integration].nil?
-          [results[:method_integration][:record]].flatten
-        else
-          []
-        end
+        results[:method_integration].nil? ? [] : [results[:method_integration][:record]].flatten
       else
         raise MethodCrmClientError, results[:response]
       end
