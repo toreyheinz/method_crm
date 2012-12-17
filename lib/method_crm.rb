@@ -33,7 +33,6 @@ module MethodCrm
 
     def get_records(table, options={})
       options[:fields] ||= field_list(table).join(',')
-      options = {:where => nil}.merge(options)
       data = @auth.merge({strTable: table, strFields: options[:fields], strWhereClause: options[:where], strGroupByClause: nil, strHaving: nil, strOrderBy: nil})
       parsed_response('Select_XML', data)
     end
