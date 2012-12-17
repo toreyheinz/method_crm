@@ -21,7 +21,7 @@ describe MethodCrm::Client do
 
     context ":detailed" do
       it 'returns a list of table details' do
-        results = client.table_list(:detailed)
+        results = client.table_list(:output => :detailed)
         results.first.keys.should include(
             :table_name,
             :supports_add,
@@ -39,7 +39,7 @@ describe MethodCrm::Client do
 
     context ":detailed" do
       it 'returns a given table`s field details' do
-        results = client.field_list('AccountAccountType', :detailed)
+        results = client.field_list('AccountAccountType', :output => :detailed)
         results.first.keys.should include(
           :supports_add,
           :supports_edit,

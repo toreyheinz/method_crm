@@ -11,9 +11,9 @@ module MethodCrm
       @auth = {strCompanyAccount: company, strLogin: username, strPassword:  password, strSessionID: nil}
     end
 
-    def table_list(output = nil)
+    def table_list(options={})
       results = parsed_response('TableList')
-      case output.to_s
+      case options[:output].to_s
       when 'detailed'
         results
       else
@@ -21,9 +21,9 @@ module MethodCrm
       end
     end
 
-    def field_list(table, output = nil) 
+    def field_list(table, options={}) 
       results = parsed_response('FieldList', {'strTable' => table})
-      case output.to_s
+      case options[:output].to_s
       when 'detailed'
         results
       else
