@@ -45,21 +45,22 @@ module MethodCrm
 
   private
     def perform_opperation(opperation, data={})
-      result = RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
-      xml    = MultiXml.parse(result)
-      content = xml['string']['__content__'] || xml['string']
-      parsed_content = MultiXml.parse(content).rubyize_keys
-      if parsed_content[:method_api][:response] == "Success"
-        unless parsed_content[:method_api][:method_integration].nil?
-          [parsed_content[:method_api][:method_integration][:record]].flatten
+      results = extract_results RestClient.post("http://www.methodintegration.com/MethodAPI/service.asmx/MethodAPI#{opperation}V2", @auth.merge(data))
+      if results[:response] == "Success"
+        unless results[:method_integration].nil?
+          [results[:method_integration][:record]].flatten
         else
           []
         end
       else
-        raise MethodCrmClientError, parsed_content[:method_api][:response]
+        raise MethodCrmClientError, results[:response]
       end
     end
 
-
+    def extract_results(response)
+      results = MultiXml.parse(response)['string']['__content__'] || xml['string']
+      results = MultiXml.parse(results).rubyize_keys
+      results[:method_api]
+    end
   end
 end
