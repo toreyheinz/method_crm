@@ -54,6 +54,7 @@ module MethodCrm
     end
 
     def extract_results(response)
+      response.encode!('UTF-8')
       results = MultiXml.parse(response)
       results = results['string']['__content__'] || results['string']
       results = MultiXml.parse(results).rubyize_keys
